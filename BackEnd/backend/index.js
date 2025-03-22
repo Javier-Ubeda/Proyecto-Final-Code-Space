@@ -1,7 +1,7 @@
 const express = require('express')
 
 const userLogin = require('./src/routes/LoginRoutes')
-// const userRouter = require('./src/routes/UserRouter')
+const userRouter = require('./src/routes/UserRouter')
 // const gameRouter = require('./src/routes')
 const rawgRouter = require('./src/routes/rawg')
 
@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/api/auth', userLogin)
-// app.use('/api/user', userRouter)
+app.use('/api/user', userRouter)
 app.use('/api/rawg', rawgRouter)
 
 connectDataBase()

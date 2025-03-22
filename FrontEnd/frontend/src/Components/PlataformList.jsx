@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { addGameToCollection } from "../Core/Services/ProductServices";
+import { createCollection } from "../Core/Services/ProductServices";
 import axios from "axios";
 
-function PlatformList() {
+const PlatformList = () => {
   const [platforms, setPlatforms] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +50,7 @@ const handleAddGame = async (game) => {
         <h3 className="text-white text-lg font-semibold mb-2">{platform.name}</h3>
 
         <button
-          onClick={() => handleAddPlatform(platform)} // si vas a hacer algo
+          onClick={() => createCollection(platform)} // si vas a hacer algo
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
         >
           Agregar a mi colección
@@ -61,4 +62,4 @@ const handleAddGame = async (game) => {
   );
 }
 
-export default PlatformList;
+export default PlatformList

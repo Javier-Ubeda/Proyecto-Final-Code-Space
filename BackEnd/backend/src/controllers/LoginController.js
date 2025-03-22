@@ -5,9 +5,9 @@ const { createToken } = require('../Utils/utils');
 
 const signup = async (req, res) => {
     try {
-        const { nombre, email, password, role } = req.body;
+        const { username, email, password, role } = req.body;
 
-        if (!nombre || !email || !password) {
+        if (!username || !email || !password) {
             return res.status(400).json({ message: 'Faltan campos obligatorios' });
         }
 
@@ -17,7 +17,7 @@ const signup = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await UserModel.create({ nombre, email, password: hashedPassword, role });
+        const newUser = await UserModel.create({ username, email, password: hashedPassword, role });
 
         res.status(201).json({ message: 'Usuario registrado con éxito', user: newUser });
     } catch (error) {
@@ -47,7 +47,7 @@ const login = async (req, res) => {
 
         const payload = {
             _id: user._id,
-            nombre: user.nombre,
+            username: user.username,
             email: user.email,
             role: user.role
         }
