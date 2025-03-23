@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { motion } from 'framer-motion'
 import { getUserGame, deleteGameFromCollection, updateGameStatus } from '../Core/Services/ProductServices'
 import { useNavigate } from 'react-router-dom'
 import DashBoardComponent from './DashBoardComponent'
@@ -61,16 +62,16 @@ const CollectionPage = () => {
     <>
     <DashBoardComponent />
     <div className="min-h-screen bg-gray-900 text-white p-4">
-        <h2 className="text-3xl font-bold mb-6 text-center">🎮 Mi colección</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center">Mi colección</h2>
 
             {game.length === 0 ? (
             <p className="text-center text-gray-400">No tienes juegos guardados aún.</p>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                         {game.map((game) => (
-                        <div
+                        <motion.div
                             key={game.rawId}
-                            className="bg-gray-800 p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
+                            className="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
                             >
                             <img
                                 src={game.coverImageUrl}
@@ -90,13 +91,14 @@ const CollectionPage = () => {
                                 </select>
 
 
-                            <button
+                            <motion.button
                                 onClick={() => handleDelete(game._id)}
-                                className="mt-2 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700"
+                                style={{backgroundColor: '#ef4444', color: 'white'}}
+                                className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded transition mt-4"
                                 >
-                                Eliminar de colección
-                            </button>
-                        </div>
+                                <p>Eliminar de colección</p>
+                            </motion.button>
+                        </motion.div>
                         ))}
                     </div>
                 )}

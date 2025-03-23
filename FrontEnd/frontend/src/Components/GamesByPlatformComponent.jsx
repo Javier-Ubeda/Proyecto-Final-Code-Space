@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { motion } from 'framer-motion'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -53,7 +54,7 @@ const GamesByPlatformComponent = () => {
             await addGameToCollection({
                 rawId: game.id,
                 title: game.name,
-                platform: game.platforms?.[0]?.platform.name || game.platforms?.[0]?.name || 'Desconocido',
+                platform: platformName || 'Desconocido',
                 coverImageUrl: game.background_image || game.coverImageUrl,
             })
 
@@ -67,15 +68,16 @@ const GamesByPlatformComponent = () => {
 
   return (
     <>
-        <div className="min-h-screen bg-gray-900 text-white p-6">
+        <motion.div className="min-h-screen bg-gray-900 text-white p-6">
             <DashBoardComponent />
             <div className="mb-6 flex justify-start">
-                <button
+                <motion.button
                     onClick={() => navigate('/home')}
+                    style={{backgroundColor: '#ef4444', color: 'white'}}
                     className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
                 >
                     ⬅ Volver a plataformas
-                </button>
+                </motion.button>
             </div>
       <h2 className="text-3xl font-bold mb-6 text-center">Juegos para {platformName || 'Plataforma'}</h2>
         <div className="mb-6 flex justify-center">
@@ -134,7 +136,7 @@ const GamesByPlatformComponent = () => {
             Siguiente ➡
         </button>
         </div>
-    </div>
+    </motion.div>
     </>
   )
 }

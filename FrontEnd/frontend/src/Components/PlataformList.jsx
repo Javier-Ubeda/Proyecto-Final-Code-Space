@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { addGameToCollection } from "../Core/Services/ProductServices";
-import { useNavigate, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 
 const PlatformList = () => {
@@ -33,7 +33,7 @@ const PlatformList = () => {
       <h2 className="text-2xl font-bold text-white mb-4">Plataformas disponibles</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {platforms.map((platform) => (
-        <div
+        <motion.div
           key={platform.id}
           className="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
         >
@@ -49,7 +49,7 @@ const PlatformList = () => {
         >
           {platform.name}
         </button>
-      </div>
+      </motion.div>
       ))}
     </div>
   </div>

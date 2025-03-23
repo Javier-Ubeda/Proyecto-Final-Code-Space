@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from 'framer-motion'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DashBoardComponent from "../DashBoardComponent";
@@ -12,7 +13,7 @@ const DetailsList = () => {
 
   const API_KEY = import.meta.env.VITE_RAWG_KEY;
 
-  // Obtener juegos
+  
   const fetchGames = async () => {
     try {
       const genreParam = selectedGenre ? `&genres=${selectedGenre}` : "";
@@ -48,8 +49,18 @@ const DetailsList = () => {
   return (
     <>
     <DashBoardComponent />
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">🎮 Juegos por género</h2>
+    <motion.div className="min-h-screen bg-gray-900 text-white p-6">
+      <h2 className="text-3xl font-bold mb-6 text-center">Juegos por género</h2>
+      <div className="mb-6 flex justify-start">
+        <motion.button
+          onClick={() => navigate('/home')}
+          style={{backgroundColor: '#ef4444', color: 'white'}}
+          className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+          >
+        ⬅ Volver a plataformas
+        </motion.button>
+      </div>
+     
 
       {/* Filtro de género */}
       <div className="mb-6 flex justify-center">
@@ -57,7 +68,7 @@ const DetailsList = () => {
           className="bg-gray-800 text-white p-2 rounded border border-gray-700"
           onChange={(e) => {
             setSelectedGenre(e.target.value);
-            setPage(1); // reiniciar paginación si cambias de género
+            setPage(1); 
           }}
         >
           <option value="">Todos los géneros</option>
@@ -72,9 +83,13 @@ const DetailsList = () => {
       {/* Lista de juegos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         {games.map((game) => (
-          <div
+          <motion.div
             key={game.id}
             className="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
+            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
             <img
               src={game.background_image}
@@ -85,7 +100,7 @@ const DetailsList = () => {
             <div className="p-4 flex flex-col flex-grow">
               <h3 className="text-lg font-semibold mb-2">{game.name}</h3>
               <p className="text-sm text-gray-400 mb-4">Lanzado: {game.released}</p>
-              <p>Consola{game.platform}</p>
+              <p className="text-sm text-gray-400 mb-2">{game.platforms?.[0]?.platform?.name || 'Desconocido'}</p>
               
               <div className="mt-auto">
               <button
@@ -97,7 +112,7 @@ const DetailsList = () => {
               </div>
               
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -118,7 +133,7 @@ const DetailsList = () => {
           Siguiente ➡
         </button>
       </div>
-    </div>
+    </motion.div>
     </>
    
   );
