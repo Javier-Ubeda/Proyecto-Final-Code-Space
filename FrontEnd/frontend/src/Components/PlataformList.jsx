@@ -9,7 +9,7 @@ const PlatformList = () => {
 
   const navigate = useNavigate()
 
-  
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/rawg/platforms")
@@ -24,15 +24,6 @@ const PlatformList = () => {
       });
   }, []);
 
-
-const handleAddGame = async (game) => {
-  try {
-    await addGameToCollection(game);
-    alert("🎮 Juego guardado en tu colección");
-  } catch (error) {
-    alert("No se pudo guardar el juego");
-  }
-};
 
 
   if (loading) return <p className="text-white">Cargando plataformas...</p>;

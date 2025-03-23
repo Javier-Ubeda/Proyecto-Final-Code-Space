@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const UserShema = new Schema({
+const UserSchema = new Schema({
     username:{
         type: String,
         required: [true, 'Es necesario introducir el nombre'],
@@ -28,12 +28,10 @@ const UserShema = new Schema({
         default: 'user'
     },
 
-    favorites:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Game'
-    }
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }]
+
 })
 
-const UserModel = mongoose.model('User', UserShema, 'user')
+const UserModel = mongoose.model('User', UserSchema, 'user')
 
 module.exports = UserModel

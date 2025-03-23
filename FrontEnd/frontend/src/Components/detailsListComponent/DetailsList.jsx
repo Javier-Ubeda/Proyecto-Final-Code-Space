@@ -85,6 +85,7 @@ const DetailsList = () => {
             <div className="p-4 flex flex-col flex-grow">
               <h3 className="text-lg font-semibold mb-2">{game.name}</h3>
               <p className="text-sm text-gray-400 mb-4">Lanzado: {game.released}</p>
+              <p>Consola{game.platform}</p>
               
               <div className="mt-auto">
               <button

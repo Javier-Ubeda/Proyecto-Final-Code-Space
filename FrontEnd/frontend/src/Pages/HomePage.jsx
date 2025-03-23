@@ -10,7 +10,7 @@ const HomePage = () => {
 
     useEffect(() => {
       if(!isAuthenticated()){
-        navigate('/login')
+        navigate('/login', {replace: true})
       }
     }, [])
 

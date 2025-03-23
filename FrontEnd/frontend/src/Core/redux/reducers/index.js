@@ -3,7 +3,7 @@ import ReducerDetails from '../../../Components/detailsListComponent/ReducersDet
 
 
 const reducers = combineReducers({
-    detail: ReducerDetails,
+    games: ReducerDetails,
 });
 
 export default reducers

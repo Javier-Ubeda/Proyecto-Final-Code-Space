@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import { getUserGame } from '../Core/Services/ProductServices'
+import { getUserGame, deleteGameFromCollection, updateGameStatus } from '../Core/Services/ProductServices'
+import { useNavigate } from 'react-router-dom'
 import DashBoardComponent from './DashBoardComponent'
 
 const CollectionPage = () => {
 
     const [game, setGame] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchGame = async () => {
@@ -19,6 +21,41 @@ const CollectionPage = () => {
         fetchGame();
     },[]);
 
+    const getStatusColorClass = (status) => {
+        switch (status) {
+          case "jugado":
+            return "bg-green-600 text-white";
+          case "jugando":
+            return "bg-blue-600 text-white";
+          case "por jugar":
+          default:
+            return "bg-yellow-600 text-white";
+        }
+      };
+      
+
+    const handleDelete = async (id) => {
+        try {
+          await deleteGameFromCollection(id);
+          setGame((Games) => Games.filter((game) => game._id !== id));
+        } catch (error) {
+          console.error("Error al eliminar el juego:", error);
+          alert("No se pudo eliminar el juego");
+        }
+      };
+
+      const handleStatusChange = async (id, newStatus) => {
+        try {
+          const updatedGame = await updateGameStatus(id, newStatus);
+          setGame((prevGames) =>
+            prevGames.map((g) => (g._id === id ? { ...g, status: updatedGame.status } : g))
+          );
+        } catch (error) {
+          console.error("Error al actualizar el estado:", error);
+          alert("No se pudo actualizar el estado del juego");
+        }
+      };
+      
 
   return (
     <>
@@ -42,9 +79,23 @@ const CollectionPage = () => {
                             />
                                 <h3 className="text-lg font-semibold mb-2">{game.title}</h3>
                                 <p className="text-sm text-gray-400 mb-2">Plataforma: {game.platform}</p>
-                                <span className="text-xs px-2 py-1 bg-blue-700 rounded-full text-white">
-                                {game.status || "Por jugar"}
-                            </span>
+                                <select
+                                    value={game.status}
+                                    onChange={(e) => handleStatusChange(game._id, e.target.value)}
+                                    className={`mt-2 w-full py-2 px-2 rounded text-sm text-center focus:outline-none ${getStatusColorClass(game.status)}`}
+                                    >
+                                    <option value="por jugar">Por jugar</option>
+                                    <option value="jugando">Jugando</option>
+                                    <option value="jugado">Jugado</option>
+                                </select>
+
+
+                            <button
+                                onClick={() => handleDelete(game._id)}
+                                className="mt-2 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700"
+                                >
+                                Eliminar de colección
+                            </button>
                         </div>
                         ))}
                     </div>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { createCollection } from '../Core/Services/ProductServices'
+import { addGameToCollection } from '../Core/Services/ProductServices'
 import DashBoardComponent from './DashBoardComponent'
 
 const GamesByPlatformComponent = () => {
@@ -50,14 +50,15 @@ const GamesByPlatformComponent = () => {
 
     const handleAddToCollection = async (game) => {
         try {
-            await createCollection({
+            await addGameToCollection({
                 rawId: game.id,
                 title: game.name,
-                platform: game.parent_platforms?.[0]?.platform.name || 'Desconocido',
-                coverImageUrl: game.background_image,
+                platform: game.platforms?.[0]?.platform.name || game.platforms?.[0]?.name || 'Desconocido',
+                coverImageUrl: game.background_image || game.coverImageUrl,
             })
 
-            alert(`${game.name} Ha sido guardadon en tu coleccion`)
+          
+            alert('se ha guardado con exito')
         } catch (error) {
             console.error('No se puedo guardar el juego en tu coleccion', error)
         }
@@ -86,7 +87,7 @@ const GamesByPlatformComponent = () => {
                 className="w-full max-w-md p-3 rounded bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
         </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                 {games.length === 0 ? (
             <p className="text-center col-span-full text-gray-400 text-lg">
                 No se encontraron juegos con ese nombre.
@@ -94,7 +95,7 @@ const GamesByPlatformComponent = () => {
             ) : (
 
             games.map((game) => (
-                <div key={game.id} className="bg-gray-800 p-4 rounded-xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between">
+            <div key={game.id} className="bg-gray-800 p-4 rounded-xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between">
                     <img
                         src={game.background_image}
                         alt={game.name}
@@ -113,10 +114,10 @@ const GamesByPlatformComponent = () => {
                     >
                     Ver detalles
                 </button>
+            </div>
+                ))
+                )}
         </div>
-        ))
-        )}
-      </div>
         <div className="transition-all duration-700 ease-in-out">
         <button
             className="bg-gray-700 px-4 py-2 rounded hover:bg-gray-600 disabled:opacity-50"

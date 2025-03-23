@@ -5,14 +5,17 @@ export const addGameToCollection = async (game) => {
     const token = localStorage.getItem("token");
 
     const gameData = {
-      rawgId: game.id,
-      title: game.name,
-      platform: game.platforms?.[0]?.platform?.name || "Desconocida",
-      coverImageUrl: game.background_image
+      rawId: game.rawId,
+      title: game.title,
+      platform: game.platform || "Desconocida",
+      coverImageUrl: game.coverImageUrl
     };
 
+    console.log('game', game)
+    console.log('gameData', gameData)
+
     const response = await axios.post(
-      "http://localhost:4000/api/games",
+      "http://localhost:4000/api/rawg",
       gameData,
       {
         headers: {
@@ -74,3 +77,28 @@ export const createCollection = async (game) => {
 
   return res.data
 }
+
+export const deleteGameFromCollection = async (gameId) => {
+  const token = localStorage.getItem("token");
+  const res = await axios.delete(`http://localhost:4000/api/rawg/${gameId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+export const updateGameStatus = async (id, status) => {
+  const token = localStorage.getItem("token");
+  const res = await axios.put(
+    `http://localhost:4000/api/rawg/${id}/status`,
+    { status },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return res.data;
+};
+

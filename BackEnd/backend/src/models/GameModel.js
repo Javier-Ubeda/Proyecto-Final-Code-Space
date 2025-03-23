@@ -25,7 +25,7 @@ const GameSchema = new Schema({
         default: 'por jugar'
     },
 
-    creatAt:{
+    createdAt:{
         type: Date,
         default: Date.now
     }

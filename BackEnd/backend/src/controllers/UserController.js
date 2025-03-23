@@ -13,7 +13,7 @@ const createCollection = async (req, res) => {
     try {
 
         console.log('REQ.BODY', req.body)
-        
+
         const {rawId, title, platform, coverImageUrl} = req.body
 
         const exist = await GameModel.findOne({

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { createCollection } from "../Core/Services/ProductServices";
+import { addGameToCollection } from "../Core/Services/ProductServices";
 
 const GameDetails = () => {
   const { id } = useParams(); // ID del juego desde la URL
@@ -30,21 +30,24 @@ const GameDetails = () => {
   if(loading) return <p className="text-white">Cargando Detalles</p>
 
   const handleAddToCollection = () => {
-    createCollection({
+    addGameToCollection({
       rawId: game.id,
       title: game.name,
       platform: game.platforms?.[0]?.platform.name || "Desconocido",
       coverImageUrl: game.background_image,
     })
       .then(() => alert("Juego guardado en tu colección"))
-      .catch(() => alert("No se pudo guardar el juego"));
+      .catch(error => {
+        console.error(error)
+        alert(error.response?.data?.message || 'No se pudo guardar el juego')
+      });
   };
 
   return (
     <div className="relative min-h-screen bg-gray-900 text-white">
        <div
           className="absolute inset-0 bg-cover bg-center blur-sm brightness-50"
-          style={{ backgroundImage: `url(${game.background_image})` }}
+          style={{ backgroundImage: `url(${game.background_image || ''})` }}
         ></div>
 
       <div className="relative z-10 p-6 flex flex-col items-center">
@@ -57,7 +60,7 @@ const GameDetails = () => {
         <div className="p-6">
           <h1 className="text-3xl font-bold mb-4">{game.name}</h1>
 
-          <p className="text-gray-300 text-sm mb-6">{game.description_raw || "Sin descripción."}</p>
+          <p className="text-gray-300 text-sm mb-6 max-h-40 overflow-auto">{game.description_raw || "Sin descripción."}</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6">
             <p><strong>Plataformas:</strong> {game.platforms?.map(p => p.platform.name).join(", ")}</p>
