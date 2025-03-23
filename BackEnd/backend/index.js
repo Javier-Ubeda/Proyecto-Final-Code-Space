@@ -2,7 +2,6 @@ const express = require('express')
 
 const userLogin = require('./src/routes/LoginRoutes')
 const userRouter = require('./src/routes/UserRouter')
-// const gameRouter = require('./src/routes')
 const rawgRouter = require('./src/routes/rawg')
 
 const cors = require('cors')

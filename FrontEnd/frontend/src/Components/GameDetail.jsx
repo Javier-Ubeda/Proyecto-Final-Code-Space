@@ -34,15 +34,20 @@ const GameDetails = () => {
       rawId: game.id,
       title: game.name,
       platform: game.platforms?.[0]?.platform.name || "Desconocido",
-      coverImagerUrl: game.background_image,
+      coverImageUrl: game.background_image,
     })
       .then(() => alert("Juego guardado en tu colección"))
       .catch(() => alert("No se pudo guardar el juego"));
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
-      <div className="max-w-4xl w-full bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+    <div className="relative min-h-screen bg-gray-900 text-white">
+       <div
+          className="absolute inset-0 bg-cover bg-center blur-sm brightness-50"
+          style={{ backgroundImage: `url(${game.background_image})` }}
+        ></div>
+
+      <div className="relative z-10 p-6 flex flex-col items-center">
         <img
           src={game.background_image}
           alt={game.name}

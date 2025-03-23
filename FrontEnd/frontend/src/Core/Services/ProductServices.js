@@ -29,15 +29,30 @@ export const addGameToCollection = async (game) => {
 };
 
 export const getUserGame = async () => {
-  const token = localStorage.getItem('token')
+  try {
+    const token = localStorage.getItem('token')
 
-  const res = await axios.get('http://localhost:4000/api/user/game', {
-    headers:{
-      Authorization:`Bearer ${token}`
+    if(!token){
+      return console.error('Token no encontrado, reinicia la sesion')
     }
+
+    const res = await axios.get('http://localhost:4000/api/user/game', {
+      headers:{
+      Authorization:`Bearer ${token}`
+      }
   });
 
   return res.data
+  } catch (error) {
+    if(error.response?.status === 401){
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      window.location.href = '/login'
+    }{
+      console.log('Error al caducar el token')
+    }
+  }
+  
 };
 
 export const createCollection = async (game) => {
@@ -45,11 +60,12 @@ export const createCollection = async (game) => {
   const token = localStorage.getItem('token')
   console.log('TOKEN', token)
 
+  console.log('GAME', game)
   const res = await axios.post('http://localhost:4000/api/user/', {
     rawId: game.id,
     title: game.name,
-    platform: game.platform?.[0]?.name || 'Desconocido',
-    coverImagerUrl: game.background_image
+    platform: game.platforms?.[0]?.platform.name || 'Desconocido',
+    coverImageUrl: game.background_image
   }, {
     headers:{
       Authorization: `Bearer ${token}`

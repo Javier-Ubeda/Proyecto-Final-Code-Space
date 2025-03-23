@@ -12,7 +12,9 @@ const getGames = async (req, res) => {
 const createCollection = async (req, res) => {
     try {
 
-        const {rawId, title, platform, coverImagerUrl} = req.body
+        console.log('REQ.BODY', req.body)
+        
+        const {rawId, title, platform, coverImageUrl} = req.body
 
         const exist = await GameModel.findOne({
             userId: req.user._id,
@@ -27,7 +29,7 @@ const createCollection = async (req, res) => {
             rawId,
             title,
             platform,
-            coverImagerUrl,
+            coverImageUrl,
             userId: req.user._id
         });
 

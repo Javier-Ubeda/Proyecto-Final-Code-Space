@@ -5,6 +5,9 @@ import LoginPage from './Pages/LoginPage'
 import CollectionPage from './Components/CollectionPage'
 import GameDetails from './Components/GameDetail'
 import DetailsList from './Components/detailsListComponent/DetailsList'
+import GamesByPlatformComponent from './Components/GamesByPlatformComponent'
+
+
 
 function App() {
 
@@ -17,6 +20,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path='/games' element={<DetailsList />}/>
         <Route path='/game/:id' element={<GameDetails />}/>
+        <Route path='/games/:platformId' element={<GamesByPlatformComponent />}/>
       </Routes>
     </Router>
   )

@@ -17,7 +17,7 @@ const GameSchema = new Schema({
 
     platform:{type: String},
 
-    coverImagerUrl:{type: String},
+    coverImageUrl:{type: String},
 
     status:{
         type: String,
@@ -27,7 +27,7 @@ const GameSchema = new Schema({
 
     creatAt:{
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
 })
 

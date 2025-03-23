@@ -35,7 +35,6 @@ const LoginComponent = () => {
                 setMode('login')
             } else {
                 const user = await loginUser(form)
-                alert(`Bienvenido ${user.username}`)
                 console.log('Bienbenido')
                 navigate('/home')
             }

@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { addGameToCollection } from "../Core/Services/ProductServices";
-import { createCollection } from "../Core/Services/ProductServices";
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from "axios";
 
 const PlatformList = () => {
   const [platforms, setPlatforms] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate()
+
+  
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/rawg/platforms")
@@ -20,6 +23,7 @@ const PlatformList = () => {
         setLoading(false);
       });
   }, []);
+
 
 const handleAddGame = async (game) => {
   try {
@@ -47,13 +51,12 @@ const handleAddGame = async (game) => {
           alt={platform.name}
           className="w-full h-40 object-cover rounded-md mb-2"
         />
-        <h3 className="text-white text-lg font-semibold mb-2">{platform.name}</h3>
 
         <button
-          onClick={() => createCollection(platform)} // si vas a hacer algo
+          onClick={() => navigate(`/games/${platform.id}`)}
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
         >
-          Agregar a mi colección
+          {platform.name}
         </button>
       </div>
       ))}

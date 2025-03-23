@@ -36,7 +36,7 @@ const CollectionPage = () => {
                             className="bg-gray-800 p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
                             >
                             <img
-                                src={game.coverImagerUrl}
+                                src={game.coverImageUrl}
                                 alt={game.title}
                                 className="w-full h-48 object-cover rounded-md mb-4"
                             />
