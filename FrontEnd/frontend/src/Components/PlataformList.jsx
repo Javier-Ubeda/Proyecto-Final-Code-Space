@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
+import FooterComponent from "./FooterComponent";
 
 const PlatformList = () => {
   const [platforms, setPlatforms] = useState([]);
@@ -11,19 +12,33 @@ const PlatformList = () => {
 
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/rawg/platforms")
-      .then((response) => {
+    const fetchPlatforms = async () => {
+      try {
+        const token = localStorage.getItem("token");
+  
+        const response = await axios.get("http://localhost:4000/api/rawg/platforms", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+  
         setPlatforms(response.data.results);
-      })
-      .catch((error) => {
-        console.error("Error al obtener plataformas:", error);
-      })
-      .finally(() => {
+      } catch (error) {
+        if(error.response?.status === 401){
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            window.location.href ='/login'
+        } else{
+            console.error("El token a caducado:", error);
+        }
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+  
+    fetchPlatforms();
   }, []);
-
+  
 
 
   if (loading) return <p className="text-white">Cargando plataformas...</p>;
@@ -52,6 +67,7 @@ const PlatformList = () => {
       </motion.div>
       ))}
     </div>
+   <FooterComponent />
   </div>
   );
 }

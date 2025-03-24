@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import { motion } from 'framer-motion'
 import { getUserGame, deleteGameFromCollection, updateGameStatus } from '../Core/Services/ProductServices'
-import { useNavigate } from 'react-router-dom'
 import DashBoardComponent from './DashBoardComponent'
+import FooterComponent from './FooterComponent'
 
 const CollectionPage = () => {
 
     const [game, setGame] = useState([])
-    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchGame = async () => {
@@ -102,7 +101,8 @@ const CollectionPage = () => {
                         ))}
                     </div>
                 )}
-    </div> 
+                <FooterComponent />
+                </div>
   </>
   )
 }

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import DashBoardComponent from "../DashBoardComponent";
+import FooterComponent from "../FooterComponent";
 
 const DetailsList = () => {
   const [games, setGames] = useState([]);
@@ -50,7 +51,7 @@ const DetailsList = () => {
     <>
     <DashBoardComponent />
     <motion.div className="min-h-screen bg-gray-900 text-white p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">Juegos por género</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center"> Todos los Juegos de consola</h2>
       <div className="mb-6 flex justify-start">
         <motion.button
           onClick={() => navigate('/home')}
@@ -133,6 +134,7 @@ const DetailsList = () => {
           Siguiente ➡
         </button>
       </div>
+      <FooterComponent />
     </motion.div>
     </>
    

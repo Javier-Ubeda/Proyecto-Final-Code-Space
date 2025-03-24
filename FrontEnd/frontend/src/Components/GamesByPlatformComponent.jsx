@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { addGameToCollection } from '../Core/Services/ProductServices'
 import DashBoardComponent from './DashBoardComponent'
+import FooterComponent from './FooterComponent'
 
 const GamesByPlatformComponent = () => {
 
@@ -137,6 +138,7 @@ const GamesByPlatformComponent = () => {
         </button>
         </div>
     </motion.div>
+    <FooterComponent />
     </>
   )
 }
